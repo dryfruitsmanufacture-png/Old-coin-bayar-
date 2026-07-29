@@ -136,7 +136,7 @@ footer{
 
   <form onsubmit="sendWhatsApp(event)">
 
-    <!-- 1. SELLER NAME -->
+    <!-- SELLER NAME -->
     <label for="name">
       Seller Name
     </label>
@@ -149,7 +149,7 @@ footer{
     >
 
 
-    <!-- 2. SELLER ADDRESS -->
+    <!-- SELLER ADDRESS -->
     <label for="address">
       Seller Address
     </label>
@@ -161,7 +161,7 @@ footer{
     ></textarea>
 
 
-    <!-- 3. MOBILE NUMBER -->
+    <!-- MOBILE NUMBER -->
     <label for="phone">
       Mobile Number
     </label>
@@ -175,7 +175,7 @@ footer{
     >
 
 
-    <!-- 4. COIN / NOTE PHOTO -->
+    <!-- COIN / NOTE PHOTO -->
     <label for="photo">
       Coin / Note Photo
     </label>
@@ -188,8 +188,8 @@ footer{
     >
 
     <div class="help">
-      Please select a clear and complete photo of the coin or note.
-      After WhatsApp opens, attach the selected photo in the chat.
+      Select a clear photo of your coin or currency note.
+      Your selected photo will be shared with the details.
     </div>
 
 
@@ -198,7 +198,7 @@ footer{
       type="submit"
       class="btn"
     >
-      📱 Send Details on WhatsApp
+      📱 Send Details & Photo on WhatsApp
     </button>
 
   </form>
@@ -213,7 +213,7 @@ footer{
 
 <script>
 
-function sendWhatsApp(event){
+async function sendWhatsApp(event){
 
   event.preventDefault();
 
@@ -226,42 +226,104 @@ function sendWhatsApp(event){
   const phone =
     document.getElementById("phone").value.trim();
 
-  const photo =
-    document.getElementById("photo").files[0];
+  const photoInput =
+    document.getElementById("photo");
 
+  const photo =
+    photoInput.files[0];
+
+
+  /* CHECK ALL FOUR OPTIONS */
 
   if(!name || !address || !phone || !photo){
 
-    alert("Please fill all four options and select a photo.");
+    alert(
+      "Please fill Seller Name, Address, Mobile Number and select a photo."
+    );
 
     return;
   }
 
 
+  /* WHATSAPP MESSAGE */
+
   const message =
-    "Hello Old Coin Buyer,%0A%0A" +
+    "Hello Old Coin Buyer,\n\n" +
 
-    "New Coin / Note Submission%0A%0A" +
+    "New Coin / Note Submission\n\n" +
 
-    "Seller Name: " +
-    encodeURIComponent(name) +
-    "%0A" +
+    "Seller Name: " + name + "\n" +
 
-    "Seller Address: " +
-    encodeURIComponent(address) +
-    "%0A" +
+    "Seller Address: " + address + "\n" +
 
-    "Mobile Number: " +
-    encodeURIComponent(phone) +
-    "%0A%0A" +
+    "Mobile Number: " + phone + "\n\n" +
 
-    "Coin / Note Photo: Selected%0A%0A" +
-
-    "I will attach the coin/note photo here on WhatsApp.";
+    "Coin / Note Photo is attached.";
 
 
-  window.location.href =
-    "https://wa.me/919785469805?text=" + message;
+  /*
+    MOBILE SHARE SYSTEM
+
+    The selected photo will be included
+    as an attachment when WhatsApp is selected.
+  */
+
+  try{
+
+    if(
+      navigator.share &&
+      navigator.canShare &&
+      navigator.canShare({
+        files:[photo]
+      })
+    ){
+
+      await navigator.share({
+
+        title:"Old Coin Buyer",
+
+        text:message,
+
+        files:[photo]
+
+      });
+
+      return;
+    }
+
+
+    /*
+      FALLBACK:
+      If the browser does not support
+      photo sharing, open WhatsApp
+      with the text.
+    */
+
+    const encodedMessage =
+      encodeURIComponent(message);
+
+    window.location.href =
+      "https://wa.me/919785469805?text=" +
+      encodedMessage;
+
+  }
+
+  catch(error){
+
+    /*
+      If user cancels the share window,
+      do nothing.
+    */
+
+    if(error.name !== "AbortError"){
+
+      alert(
+        "Photo sharing is not supported by this browser. Please try Chrome or Safari on your phone."
+      );
+
+    }
+
+  }
 
 }
 
