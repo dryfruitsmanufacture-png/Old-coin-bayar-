@@ -1,81 +1,280 @@
-return;
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Old Coin Buyer</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#111;
+  color:#fff;
+}
+
+.hero{
+  padding:50px 20px;
+  text-align:center;
+  background:#111;
+}
+
+.hero h1{
+  color:#ffd700;
+  font-size:36px;
+  margin-bottom:15px;
+}
+
+.hero p{
+  color:#ddd;
+  font-size:17px;
+  line-height:1.6;
+}
+
+section{
+  padding:30px 18px;
+  max-width:650px;
+  margin:auto;
+}
+
+h2{
+  color:#ffd700;
+  text-align:center;
+  margin-bottom:25px;
+}
+
+form{
+  background:#222;
+  padding:25px;
+  border-radius:15px;
+  border:1px solid #444;
+}
+
+label{
+  display:block;
+  margin-top:18px;
+  margin-bottom:8px;
+  font-size:17px;
+  font-weight:bold;
+}
+
+input,
+textarea{
+  width:100%;
+  padding:14px;
+  border-radius:8px;
+  border:1px solid #777;
+  background:#111;
+  color:#fff;
+  font-size:16px;
+}
+
+textarea{
+  min-height:130px;
+  resize:vertical;
+}
+
+.help{
+  margin-top:10px;
+  color:#bbb;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.btn{
+  width:100%;
+  margin-top:25px;
+  padding:16px;
+  background:#ffd700;
+  color:#111;
+  border:none;
+  border-radius:8px;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn:active{
+  transform:scale(.98);
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#888;
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- HERO -->
+
+<div class="hero">
+
+  <h1>Sell Your Coin / Note</h1>
+
+  <p>
+    Submit your details and contact us on WhatsApp.
+  </p>
+
+</div>
+
+
+<!-- FORM -->
+
+<section>
+
+  <h2>Submit Your Details</h2>
+
+
+  <form onsubmit="sendWhatsApp(event)">
+
+
+    <!-- 1. SELLER NAME -->
+
+    <label for="name">
+      Seller Name
+    </label>
+
+    <input
+      type="text"
+      id="name"
+      placeholder="Enter your full name"
+      required
+    >
+
+
+    <!-- 2. MOBILE NUMBER -->
+
+    <label for="phone">
+      Mobile Number
+    </label>
+
+    <input
+      type="tel"
+      id="phone"
+      placeholder="Enter your mobile number"
+      inputmode="numeric"
+      required
+    >
+
+
+    <!-- 3. FULL ADDRESS -->
+
+    <label for="address">
+      Full Address
+    </label>
+
+    <textarea
+      id="address"
+      placeholder="Enter your full address with PIN Code"
+      required
+    ></textarea>
+
+
+    <div class="help">
+      Please enter your complete address including your PIN Code.
+    </div>
+
+
+    <!-- WHATSAPP BUTTON -->
+
+    <button
+      type="submit"
+      class="btn"
+    >
+      📱 Send Details on WhatsApp
+    </button>
+
+
+  </form>
+
+</section>
+
+
+<footer>
+
+  © 2026 Old Coin Buyer
+
+</footer>
+
+
+<script>
+
+function sendWhatsApp(event){
+
+  event.preventDefault();
+
+
+  /* GET FORM DETAILS */
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const address =
+    document.getElementById("address").value.trim();
+
+
+  /* CHECK DETAILS */
+
+  if(!name || !phone || !address){
+
+    alert(
+      "Please fill Name, Mobile Number and Full Address."
+    );
+
+    return;
   }
 
 
   /* WHATSAPP MESSAGE */
 
   const message =
-    "Hello Old Coin Buyer,\n\n" +
+    "Hello Old Coin Buyer,%0A%0A" +
 
-    "New Coin / Note Submission\n\n" +
+    "New Coin / Note Inquiry%0A%0A" +
 
-    "Seller Name: " + name + "\n" +
+    "Seller Name: " +
+    encodeURIComponent(name) +
+    "%0A%0A" +
 
-    "Seller Address: " + address + "\n" +
+    "Mobile Number: " +
+    encodeURIComponent(phone) +
+    "%0A%0A" +
 
-    "Mobile Number: " + phone + "\n\n" +
+    "Full Address:%0A" +
+    encodeURIComponent(address) +
+    "%0A%0A" +
 
-    "Coin / Note Photo is attached.";
-
-
-  /*
-    MOBILE SHARE SYSTEM
-
-    The selected photo will be included
-    as an attachment when WhatsApp is selected.
-  */
-
-  try{
-
-    if(
-      navigator.share &&
-      navigator.canShare &&
-      navigator.canShare({
-        files:[photo]
-      })
-    ){
-
-      await navigator.share({
-
-        title:"Old Coin Buyer",
-
-        text:message,
-
-        files:[photo]
-
-      });
-
-      return;
-    }
+    "I would like to sell my old coin / note. Please contact me.";
 
 
-    /*
-      FALLBACK:
-      If the browser does not support
-      photo sharing, open WhatsApp
-      with the text.
-    */
+  /* OPEN WHATSAPP */
 
-    const encodedMessage =
-      encodeURIComponent(message);
+  window.location.href =
+    "https://wa.me/919785469805?text=" +
+    message;
 
-    window.location.href =
-      "https://wa.me/919785469805?text=" +
-      encodedMessage;
+}
 
-  }
+</script>
 
-  catch(error){
 
-    /*
-      If user cancels the share window,
-      do nothing.
-    */
+</body>
 
-    if(error.name !== "AbortError"){
-
-      alert(
-        "Photo sharing is not supported by this browser. Please try Chrome or Safari on your phone."
-      );
-
-    }
+</html>
