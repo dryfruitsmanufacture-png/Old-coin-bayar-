@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
 <title>Old Coin Buyer</title>
 
 <style>
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -22,9 +20,8 @@ body{
 }
 
 .hero{
-  padding:50px 20px;
+  padding:45px 20px;
   text-align:center;
-  background:#111;
 }
 
 .hero h1{
@@ -45,17 +42,18 @@ section{
   margin:auto;
 }
 
-h2{
+.step{
+  background:#222;
+  border:1px solid #444;
+  border-radius:15px;
+  padding:25px;
+}
+
+.step-title{
   color:#ffd700;
   text-align:center;
   margin-bottom:25px;
-}
-
-form{
-  background:#222;
-  padding:25px;
-  border-radius:15px;
-  border:1px solid #444;
+  font-size:24px;
 }
 
 label{
@@ -84,7 +82,7 @@ textarea{
 
 .help{
   margin-top:10px;
-  color:#bbb;
+  color:#aaa;
   font-size:14px;
   line-height:1.5;
 }
@@ -106,43 +104,89 @@ textarea{
   transform:scale(.98);
 }
 
+.back-btn{
+  background:#444;
+  color:#fff;
+}
+
+.payment-box{
+  text-align:center;
+}
+
+.charge{
+  font-size:28px;
+  font-weight:bold;
+  color:#ffd700;
+  margin:15px 0 25px;
+}
+
+.qr-box{
+  width:220px;
+  height:220px;
+  margin:0 auto 20px;
+  border:2px dashed #777;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+  text-align:center;
+  padding:20px;
+}
+
+.payment-detail{
+  background:#111;
+  border:1px solid #444;
+  border-radius:10px;
+  padding:16px;
+  text-align:left;
+  margin-top:15px;
+  line-height:1.8;
+}
+
+.payment-detail strong{
+  color:#ffd700;
+}
+
 footer{
   text-align:center;
   padding:25px;
   color:#888;
 }
 
+.hidden{
+  display:none;
+}
 </style>
 </head>
 
-
 <body>
-
-
-<!-- HERO -->
 
 <div class="hero">
 
   <h1>Sell Your Coin / Note</h1>
 
   <p>
-    Submit your details and contact us on WhatsApp.
+    Submit your details and continue to the next step.
   </p>
 
 </div>
 
 
-<!-- FORM -->
-
 <section>
 
-  <h2>Submit Your Details</h2>
+  <!-- ========================= -->
+  <!-- STEP 1 -->
+  <!-- ========================= -->
+
+  <div id="step1" class="step">
+
+    <div class="step-title">
+      Step 1 - Your Details
+    </div>
 
 
-  <form onsubmit="sendWhatsApp(event)">
-
-
-    <!-- 1. SELLER NAME -->
+    <!-- NAME -->
 
     <label for="name">
       Seller Name
@@ -156,7 +200,7 @@ footer{
     >
 
 
-    <!-- 2. MOBILE NUMBER -->
+    <!-- MOBILE -->
 
     <label for="phone">
       Mobile Number
@@ -171,7 +215,7 @@ footer{
     >
 
 
-    <!-- 3. FULL ADDRESS -->
+    <!-- FULL ADDRESS -->
 
     <label for="address">
       Full Address
@@ -189,36 +233,122 @@ footer{
     </div>
 
 
-    <!-- WHATSAPP BUTTON -->
+    <!-- NEXT -->
 
     <button
-      type="submit"
+      type="button"
       class="btn"
+      onclick="goToPayment()"
     >
-      📱 Send Details on WhatsApp
+      NEXT →
     </button>
 
+  </div>
 
-  </form>
+
+  <!-- ========================= -->
+  <!-- STEP 2 -->
+  <!-- ========================= -->
+
+  <div id="step2" class="step hidden">
+
+    <div class="step-title">
+      Step 2 - File Charge Payment
+    </div>
+
+
+    <div class="payment-box">
+
+      <div>
+        File Charge
+      </div>
+
+      <div class="charge">
+        ₹1,150
+      </div>
+
+
+      <!-- QR CODE PLACEHOLDER -->
+
+      <div class="qr-box">
+        QR CODE<br>
+        WILL BE ADDED HERE
+      </div>
+
+
+      <!-- UPI DETAILS -->
+
+      <div class="payment-detail">
+
+        <div>
+          <strong>UPI ID:</strong>
+          YOUR-UPI-ID@upi
+        </div>
+
+        <div>
+          <strong>Account Holder:</strong>
+          YOUR NAME
+        </div>
+
+        <div>
+          <strong>Account Number:</strong>
+          XXXX XXXX XXXX
+        </div>
+
+        <div>
+          <strong>IFSC Code:</strong>
+          XXXXX000000
+        </div>
+
+      </div>
+
+
+      <div class="help">
+        Please complete the payment using the QR code or
+        the payment details shown above.
+      </div>
+
+
+      <!-- CONTINUE -->
+
+      <button
+        type="button"
+        class="btn"
+        onclick="paymentContinue()"
+      >
+        CONTINUE →
+      </button>
+
+
+      <!-- BACK -->
+
+      <button
+        type="button"
+        class="btn back-btn"
+        onclick="goBack()"
+      >
+        ← BACK
+      </button>
+
+    </div>
+
+  </div>
 
 </section>
 
 
 <footer>
-
   © 2026 Old Coin Buyer
-
 </footer>
 
 
 <script>
 
-function sendWhatsApp(event){
+/* =========================
+   STEP 1 → STEP 2
+========================= */
 
-  event.preventDefault();
-
-
-  /* GET FORM DETAILS */
+function goToPayment(){
 
   const name =
     document.getElementById("name").value.trim();
@@ -230,51 +360,73 @@ function sendWhatsApp(event){
     document.getElementById("address").value.trim();
 
 
-  /* CHECK DETAILS */
+  if(!name){
 
-  if(!name || !phone || !address){
-
-    alert(
-      "Please fill Name, Mobile Number and Full Address."
-    );
+    alert("Please enter your name.");
 
     return;
   }
 
 
-  /* WHATSAPP MESSAGE */
+  if(!phone){
 
-  const message =
-    "Hello Old Coin Buyer,%0A%0A" +
+    alert("Please enter your mobile number.");
 
-    "New Coin / Note Inquiry%0A%0A" +
-
-    "Seller Name: " +
-    encodeURIComponent(name) +
-    "%0A%0A" +
-
-    "Mobile Number: " +
-    encodeURIComponent(phone) +
-    "%0A%0A" +
-
-    "Full Address:%0A" +
-    encodeURIComponent(address) +
-    "%0A%0A" +
-
-    "I would like to sell my old coin / note. Please contact me.";
+    return;
+  }
 
 
-  /* OPEN WHATSAPP */
+  if(!address){
 
-  window.location.href =
-    "https://wa.me/919785469805?text=" +
-    message;
+    alert("Please enter your full address with PIN Code.");
+
+    return;
+  }
+
+
+  document.getElementById("step1").classList.add("hidden");
+
+  document.getElementById("step2").classList.remove("hidden");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   STEP 2 → NEXT
+========================= */
+
+function paymentContinue(){
+
+  alert(
+    "Payment verification will be connected in the next step."
+  );
+
+}
+
+
+/* =========================
+   BACK TO STEP 1
+========================= */
+
+function goBack(){
+
+  document.getElementById("step2").classList.add("hidden");
+
+  document.getElementById("step1").classList.remove("hidden");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
 </script>
 
-
 </body>
-
 </html>
