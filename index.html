@@ -148,6 +148,49 @@ textarea{
   color:#ffd700;
 }
 
+.tracking-box{
+  text-align:center;
+}
+
+.tracking-id{
+  background:#111;
+  border:1px solid #555;
+  border-radius:10px;
+  padding:15px;
+  margin:20px 0;
+  font-size:20px;
+  color:#ffd700;
+  font-weight:bold;
+}
+
+.status-box{
+  margin-top:25px;
+  background:#111;
+  border:1px solid #444;
+  border-radius:10px;
+  padding:20px;
+  text-align:left;
+}
+
+.status-title{
+  color:#ffd700;
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.status{
+  font-size:17px;
+  line-height:1.7;
+}
+
+.status-line{
+  margin-top:10px;
+  padding:12px;
+  border-left:4px solid #ffd700;
+  background:#222;
+}
+
 footer{
   text-align:center;
   padding:25px;
@@ -186,8 +229,6 @@ footer{
     </div>
 
 
-    <!-- NAME -->
-
     <label for="name">
       Seller Name
     </label>
@@ -196,11 +237,8 @@ footer{
       type="text"
       id="name"
       placeholder="Enter your full name"
-      required
     >
 
-
-    <!-- MOBILE -->
 
     <label for="phone">
       Mobile Number
@@ -211,11 +249,8 @@ footer{
       id="phone"
       placeholder="Enter your mobile number"
       inputmode="numeric"
-      required
     >
 
-
-    <!-- FULL ADDRESS -->
 
     <label for="address">
       Full Address
@@ -224,7 +259,6 @@ footer{
     <textarea
       id="address"
       placeholder="Enter your full address with PIN Code"
-      required
     ></textarea>
 
 
@@ -232,8 +266,6 @@ footer{
       Please enter your complete address including your PIN Code.
     </div>
 
-
-    <!-- NEXT -->
 
     <button
       type="button"
@@ -268,15 +300,11 @@ footer{
       </div>
 
 
-      <!-- QR CODE PLACEHOLDER -->
-
       <div class="qr-box">
         QR CODE<br>
         WILL BE ADDED HERE
       </div>
 
-
-      <!-- UPI DETAILS -->
 
       <div class="payment-detail">
 
@@ -309,8 +337,6 @@ footer{
       </div>
 
 
-      <!-- CONTINUE -->
-
       <button
         type="button"
         class="btn"
@@ -320,12 +346,89 @@ footer{
       </button>
 
 
-      <!-- BACK -->
-
       <button
         type="button"
         class="btn back-btn"
         onclick="goBack()"
+      >
+        ← BACK
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- STEP 3 TRACKING -->
+  <!-- ========================= -->
+
+  <div id="step3" class="step hidden">
+
+    <div class="step-title">
+      Step 3 - Track Your File
+    </div>
+
+
+    <div class="tracking-box">
+
+      <p class="help">
+        Enter your personal Tracking ID to check your
+        file status.
+      </p>
+
+
+      <label for="trackingId">
+        Tracking ID
+      </label>
+
+      <input
+        type="text"
+        id="trackingId"
+        placeholder="Example: OCB-2026-001"
+      >
+
+
+      <button
+        type="button"
+        class="btn"
+        onclick="trackStatus()"
+      >
+        TRACK STATUS
+      </button>
+
+
+      <div
+        id="trackingResult"
+        class="status-box hidden"
+      >
+
+        <div class="status-title">
+          Tracking Details
+        </div>
+
+        <div class="status">
+
+          <div>
+            <strong>Tracking ID:</strong>
+            <span id="showTrackingId"></span>
+          </div>
+
+          <div class="status-line">
+            <strong>Status:</strong><br>
+            Your file has been received and is
+            currently under review.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="btn back-btn"
+        onclick="goBackToPayment()"
       >
         ← BACK
       </button>
@@ -384,9 +487,11 @@ function goToPayment(){
   }
 
 
-  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step1")
+    .classList.add("hidden");
 
-  document.getElementById("step2").classList.remove("hidden");
+  document.getElementById("step2")
+    .classList.remove("hidden");
 
   window.scrollTo({
     top:0,
@@ -397,27 +502,86 @@ function goToPayment(){
 
 
 /* =========================
-   STEP 2 → NEXT
+   STEP 2 → STEP 3
 ========================= */
 
 function paymentContinue(){
 
-  alert(
-    "Payment verification will be connected in the next step."
-  );
+  document.getElementById("step2")
+    .classList.add("hidden");
+
+  document.getElementById("step3")
+    .classList.remove("hidden");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
 
 /* =========================
-   BACK TO STEP 1
+   STEP 3 TRACKING
+========================= */
+
+function trackStatus(){
+
+  const trackingId =
+    document
+      .getElementById("trackingId")
+      .value
+      .trim();
+
+
+  if(!trackingId){
+
+    alert("Please enter your Tracking ID.");
+
+    return;
+  }
+
+
+  document.getElementById("showTrackingId")
+    .textContent = trackingId;
+
+  document.getElementById("trackingResult")
+    .classList.remove("hidden");
+
+}
+
+
+/* =========================
+   STEP 2 BACK
 ========================= */
 
 function goBack(){
 
-  document.getElementById("step2").classList.add("hidden");
+  document.getElementById("step2")
+    .classList.add("hidden");
 
-  document.getElementById("step1").classList.remove("hidden");
+  document.getElementById("step1")
+    .classList.remove("hidden");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   STEP 3 BACK
+========================= */
+
+function goBackToPayment(){
+
+  document.getElementById("step3")
+    .classList.add("hidden");
+
+  document.getElementById("step2")
+    .classList.remove("hidden");
 
   window.scrollTo({
     top:0,
