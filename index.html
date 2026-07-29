@@ -1,56 +1,107 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Old Coin Bazar India</title>
+<title>Old Coin Buyer</title>
+
 <style>
-body{
-font-family:Arial,sans-serif;
+*{
 margin:0;
-background:#f5f5f5;
-text-align:center;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
+
+body{
+background:#f4f4f4;
+}
+
 header{
-background:#b8860b;
+background:#111;
+color:#FFD700;
+padding:15px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-size:18px;
+}
+
+.hero{
+background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),url('https://images.unsplash.com/photo-1610375461246-83df859d849d?q=80&w=1600&auto=format&fit=crop') center/cover;
+height:90vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
 color:white;
 padding:20px;
 }
-.hero{
-padding:40px 20px;
+
+.hero h1{
+font-size:50px;
+margin-bottom:15px;
+color:#FFD700;
 }
-button{
-background:#28a745;
-color:white;
-padding:12px 25px;
-border:none;
-border-radius:5px;
-font-size:18px;
+
+.hero p{
+font-size:22px;
+margin-bottom:25px;
 }
-footer{
-background:#222;
-color:white;
-padding:15px;
-margin-top:40px;
+
+.btn{
+display:inline-block;
+padding:15px 30px;
+background:#FFD700;
+color:black;
+font-weight:bold;
+text-decoration:none;
+border-radius:8px;
 }
 </style>
 </head>
+
 <body>
 
 <header>
-<h1>Old Coin Bazar India</h1>
-<p>Buy & Sell Old Coins and Old Notes</p>
+<div class="logo">🪙 Old Coin Buyer</div>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Submit Coin</a>
+<a href="#">About</a>
+<a href="#">Contact</a>
+</nav>
+
 </header>
 
-<div class="hero">
-<h2>Welcome</h2>
-<p>भारत में पुराने सिक्के और पुराने नोट खरीदें और बेचें।</p>
-<button>Sell Your Coin</button>
+<section class="hero">
+
+<div>
+
+<h1>We Buy Old Coins & Notes</h1>
+
+<p>
+Upload clear photos of your old coin or currency note.
+Our team will review your submission and contact you on WhatsApp if we are interested.
+</p>
+
+<a href="#" class="btn">Submit Now</a>
+
 </div>
 
-<footer>
-© 2026 Old Coin Bazar India
-</footer>
+</section>
 
 </body>
 </html>
