@@ -7,67 +7,115 @@
 
 <style>
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
 }
 
 body{
-background:#f4f4f4;
+  background:#111;
+  color:#fff;
 }
 
 header{
-background:#111;
-color:#FFD700;
-padding:15px 40px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+  background:#111;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:2px solid #ffd700;
 }
 
 .logo{
-font-size:28px;
-font-weight:bold;
+  color:#ffd700;
+  font-size:25px;
+  font-weight:bold;
 }
 
 nav a{
-color:white;
-text-decoration:none;
-margin-left:20px;
-font-size:18px;
+  color:#fff;
+  text-decoration:none;
+  margin-left:15px;
 }
 
 .hero{
-background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),url('https://images.unsplash.com/photo-1610375461246-83df859d849d?q=80&w=1600&auto=format&fit=crop') center/cover;
-height:90vh;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-color:white;
-padding:20px;
+  padding:70px 20px;
+  text-align:center;
+  background:linear-gradient(#000b,#000b),url("https://images.unsplash.com/photo-1605792657660-596af9009e82?auto=format&fit=crop&w=1200&q=80");
+  background-size:cover;
+  background-position:center;
 }
 
 .hero h1{
-font-size:50px;
-margin-bottom:15px;
-color:#FFD700;
+  color:#ffd700;
+  font-size:40px;
+  margin-bottom:20px;
 }
 
 .hero p{
-font-size:22px;
-margin-bottom:25px;
+  font-size:18px;
+  line-height:1.6;
+  max-width:650px;
+  margin:auto;
 }
 
 .btn{
-display:inline-block;
-padding:15px 30px;
-background:#FFD700;
-color:black;
-font-weight:bold;
-text-decoration:none;
-border-radius:8px;
+  display:inline-block;
+  margin-top:25px;
+  background:#ffd700;
+  color:#111;
+  padding:15px 25px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:bold;
+  border:0;
+  cursor:pointer;
+}
+
+section{
+  padding:45px 20px;
+  max-width:700px;
+  margin:auto;
+}
+
+h2{
+  color:#ffd700;
+  margin-bottom:20px;
+  text-align:center;
+}
+
+form{
+  background:#222;
+  padding:25px;
+  border-radius:12px;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:7px;
+}
+
+input,textarea{
+  width:100%;
+  padding:13px;
+  border-radius:7px;
+  border:1px solid #555;
+  background:#111;
+  color:#fff;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#aaa;
+  border-top:1px solid #333;
 }
 </style>
 </head>
@@ -75,33 +123,83 @@ border-radius:8px;
 <body>
 
 <header>
-<div class="logo">🪙 Old Coin Buyer</div>
-
-<nav>
-<a href="#">Home</a>
-<a href="#">Submit Coin</a>
-<a href="#">About</a>
-<a href="#">Contact</a>
-</nav>
-
+  <div class="logo">🪙 Old Coin Buyer</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#submit">Submit</a>
+    <a href="#about">About</a>
+  </nav>
 </header>
 
-<section class="hero">
+<div class="hero" id="home">
+  <h1>We Buy Old Coins & Notes</h1>
+  <p>
+    Upload information about your old coin or currency note.
+    Our team will review your details and contact you on WhatsApp
+    if we are interested.
+  </p>
 
-<div>
-
-<h1>We Buy Old Coins & Notes</h1>
-
-<p>
-Upload clear photos of your old coin or currency note.
-Our team will review your submission and contact you on WhatsApp if we are interested.
-</p>
-
-<a href="#" class="btn">Submit Now</a>
-
+  <a class="btn" href="#submit">Submit Now</a>
 </div>
 
+<section id="submit">
+  <h2>Submit Your Coin / Note</h2>
+
+  <form onsubmit="sendWhatsApp(event)">
+
+    <label>Your Name</label>
+    <input type="text" id="name" required>
+
+    <label>Mobile Number</label>
+    <input type="tel" id="phone" required>
+
+    <label>Coin / Note Details</label>
+    <textarea id="details" placeholder="Year, denomination, condition, etc." required></textarea>
+
+    <label>Photo of Coin / Note</label>
+    <input type="file" id="photo" accept="image/*">
+
+    <button class="btn" type="submit">
+      Send Details on WhatsApp
+    </button>
+
+  </form>
 </section>
+
+<section id="about">
+  <h2>About Us</h2>
+  <p style="text-align:center;line-height:1.7;">
+    We are interested in old coins and currency notes.
+    Submit your details and our team will review them.
+  </p>
+</section>
+
+<footer>
+  © 2026 Old Coin Buyer
+</footer>
+
+<script>
+function sendWhatsApp(event){
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const details = document.getElementById("details").value;
+  const photo = document.getElementById("photo").files.length;
+
+  let message =
+    "Hello Old Coin Buyer,%0A%0A" +
+    "New Coin/Note Submission%0A%0A" +
+    "Name: " + encodeURIComponent(name) + "%0A" +
+    "Customer Mobile: " + encodeURIComponent(phone) + "%0A" +
+    "Details: " + encodeURIComponent(details) + "%0A" +
+    "Photo selected: " + (photo ? "Yes" : "No") + "%0A%0A" +
+    "I will send the coin/note photo here on WhatsApp.";
+
+  window.location.href =
+    "https://wa.me/919785469805?text=" + message;
+}
+</script>
 
 </body>
 </html>
