@@ -599,6 +599,56 @@ apiKey: "AIzaSyAUksTZX7XyUDhWPdxdGGGJrHXSAZm1sWw",
   appId: "1:953843318096:web:58086c58dd27d707ec4055",
 };
 
+ // Firebase Initialize
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+function trackStatus() {
+
+  const trackingId = document
+    .getElementById("trackingId")
+    .value
+    .trim();
+
+  if (!trackingId) {
+    alert("Please enter your Tracking ID.");
+    return;
+  }
+
+  db.collection("tracking")
+    .doc(trackingId)
+    .get()
+    .then((doc) => {
+
+      if (doc.exists) {
+
+        const data = doc.data();
+
+        document.getElementById("showTrackingId").textContent = trackingId;
+
+        document.getElementById("showStatus").textContent = data.Status;
+
+        document.getElementById("showMessage").textContent = data.Message;
+
+        document.getElementById("trackingResult")
+          .classList.remove("hidden");
+
+      } else {
+
+        alert("Tracking ID not found.");
+
+      }
+
+    })
+    .catch((error) => {
+
+      console.log(error);
+      alert("Something went wrong.");
+
+    });
+
+} 
 
 </script>
 
