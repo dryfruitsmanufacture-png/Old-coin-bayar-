@@ -77,7 +77,44 @@ window.saveStatus = async function () {
   document.getElementById("msg").innerHTML =
     "Status Saved Successfully!";
 };
-</script
+script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyAUksTZX7XyUDhWPdxdGGGJrHXSAZm1sWw",
+  authDomain: "old-coin-bayar.firebaseapp.com",
+  projectId: "old-coin-bayar",
+  storageBucket: "old-coin-bayar.firebasestorage.app",
+  messagingSenderId: "953843318096",
+  appId: "1:953843318096:web:58086c58dd27d707ec4055",
+  measurementId: "G-Y9B5MND8FJ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.saveStatus = async function () {
+  const trackId = document.getElementById("trackId").value;
+  const status = document.getElementById("status").value;
+
+  if (!trackId) {
+    alert("Enter Tracking ID");
+    return;
+  }
+
+  await setDoc(doc(db, "tracking", trackId), {
+    status: status
+  });
+
+  document.getElementById("msg").innerHTML =
+    "Status Saved Successfully!";
+};
+
+</script>
 </body>
 </html>
